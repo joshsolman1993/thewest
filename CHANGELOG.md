@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 1 Sprint 3 (2025-12-02)
+
+#### PostgreSQL Migration & TypeORM Setup
+- Migrated from SQLite to PostgreSQL as primary database
+- Installed `pg` driver for PostgreSQL support
+- Created TypeORM DataSource configuration (`src/config/typeorm.config.ts`) for migrations
+- Added migration CLI scripts to package.json:
+  - `migration:generate` - Generate migration from entity changes
+  - `migration:run` - Run pending migrations
+  - `migration:revert` - Rollback last migration
+  - `migration:show` - Show migration status
+- Generated initial schema migration (`InitialSchema1764655650967`)
+  - Creates all tables: user, character, inventory_item, quest, user_quest
+  - Includes foreign key relationships and indexes
+- Updated app.module.ts to PostgreSQL-only configuration
+- Disabled `synchronize` - now using migrations exclusively
+- Enabled `migrationsRun` for automatic migration execution on startup
+- Simplified configuration.ts to PostgreSQL-only setup
+
+### Changed - Phase 1 Sprint 3
+- **BREAKING**: Removed SQLite support - PostgreSQL now required
+- **BREAKING**: `synchronize` disabled - schema changes require migrations
+- Updated `.env.example` with PostgreSQL credentials
+
 ### Added - Phase 1 Sprint 2 (2025-12-02)
 
 #### Testing Infrastructure
