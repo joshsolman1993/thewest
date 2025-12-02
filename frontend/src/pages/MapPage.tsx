@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ParchmentPanel } from '../components/ui';
-import { PhaserMap } from '../components/map/PhaserMap';
+import { SimpleMap } from '../components/map/SimpleMap';
 
 export const MapPage = () => {
     const [currentLocation, setCurrentLocation] = useState('Dusty Gulch');
@@ -18,7 +18,7 @@ export const MapPage = () => {
             </h1>
 
             <ParchmentPanel title="World Map" seal>
-                <PhaserMap onLocationChange={setCurrentLocation} />
+                <SimpleMap onLocationChange={setCurrentLocation} />
             </ParchmentPanel>
 
             <div style={{ marginTop: 'var(--space-6)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>

@@ -1,0 +1,49 @@
+.container {
+  padding: 1rem;
+  background: linear-gradient(135deg, #E8D5B7 0%, #DCC9A8 100%);
+  border-radius: var(--radius-md);
+  min-height: 400px;
+}
+
+.mapGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.locationCard {
+  background: #FFF9ED;
+  border: 3px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.locationCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  background: #FFFFFF;
+}
+
+.icon {
+  font-size: 2.5rem;
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-leather-darkest);
+  text-align: center;
+}
+
+.type {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--color-leather);
+}

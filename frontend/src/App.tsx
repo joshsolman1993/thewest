@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './api/queryClient';
 import { DashboardLayout } from './components/layout/DashboardLayout';
-import { CharacterPage } from './pages/CharacterPage';
-import { MapPage } from './pages/MapPage';
-import { TownPage } from './pages/TownPage';
-import { QuestsPage } from './pages/QuestsPage';
-import { DuelPage } from './pages/DuelPage';
-import { ComponentsShowcasePage } from './pages/ComponentsShowcasePage';
 import { LandingPage } from './pages/LandingPage';
 import { ParchmentPanel } from './components/ui';
 import { useAuthStore } from './store/authStore';
 import './index.css';
+
+// Lazy load pages
+const CharacterPage = lazy(() => import('./pages/CharacterPage').then(m => ({ default: m.CharacterPage })));
+const MapPage = lazy(() => import('./pages/MapPage').then(m => ({ default: m.MapPage })));
+const TownPage = lazy(() => import('./pages/TownPage').then(m => ({ default: m.TownPage })));
+const QuestsPage = lazy(() => import('./pages/QuestsPage').then(m => ({ default: m.QuestsPage })));
+const DuelPage = lazy(() => import('./pages/DuelPage').then(m => ({ default: m.DuelPage })));
+const ComponentsShowcasePage = lazy(() => import('./pages/ComponentsShowcasePage').then(m => ({ default: m.ComponentsShowcasePage })));
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -71,9 +75,17 @@ function App() {
   }
 
   return (
-    <DashboardLayout>
-      {renderPage()}
-    </DashboardLayout>
+    <QueryClientProvider client={queryClient}>
+      <DashboardLayout>
+        <Suspense fallback={
+          <div style={{ padding: '2rem', textAlign: 'center' }}>
+            <p>Loading...</p>
+          </div>
+        }>
+          {renderPage()}
+        </Suspense>
+      </DashboardLayout>
+    </QueryClientProvider>
   );
 }
 

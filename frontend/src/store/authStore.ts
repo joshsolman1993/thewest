@@ -16,6 +16,7 @@ interface AuthState {
     login: (username: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>;
     logout: () => void;
+    setAuth: (token: string, user?: User) => void;
 }
 
 const API_URL = 'http://localhost:3000';
@@ -97,6 +98,14 @@ export const useAuthStore = create<AuthState>()(
                         isLoading: false
                     });
                 }
+            },
+
+            setAuth: (token, user) => {
+                set({
+                    token,
+                    isAuthenticated: true,
+                    user: user || null,
+                });
             },
 
             logout: () => {
