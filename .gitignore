@@ -41,7 +41,7 @@ Desktop.ini
 # Backend specific
 backend/token.txt
 backend/dust.sqlite
-backend/test/
+backend/coverage/
 
 # Frontend specific
 frontend/dist/
