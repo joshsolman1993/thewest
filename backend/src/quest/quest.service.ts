@@ -98,15 +98,15 @@ export class QuestService {
                 // Items
                 if (rewards.items) {
                     for (const itemReward of rewards.items) {
-                        // We need to use InventoryService, but it uses its own repository.
-                        // To be transactional, we should use the queryRunner's manager.
-                        // This requires refactoring InventoryService to accept a manager or duplicating logic.
-                        // For simplicity in this phase, we'll just call the service after the transaction commit 
-                        // OR we accept that item reward might fail after quest completion (rare).
-                        // BETTER: Let's just use the service. If it fails, we have a slight inconsistency.
-                        // For a robust solution, we'd pass the transaction manager to the service.
-
-                        await this.inventoryService.addItem(character.id, itemReward.itemId, itemReward.quantity);
+                        // Note: Inventory changes happen outside transaction
+                        // This is acceptable as quest completion is primary concern
+                        // Worst case: quest completes but items not added (can be fixed manually)
+                        await this.inventoryService.addItem(user.id, {
+                            itemId: itemReward.itemId,
+                            itemName: `Quest Reward`, // Generic name for quest items
+                            itemType: 'quest',
+                            quantity: itemReward.quantity,
+                        });
                     }
                 }
             }
