@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 1 Sprint 2 (2025-12-02)
+
+#### Testing Infrastructure
+- Added test utilities (`test/test-utils.ts`) with mock repository factory and test data generators
+- Created **UsersService** unit tests (7 tests, 100% coverage)
+  - Tests for `findOne` method (found, not found, database errors)
+  - Tests for `create` method (successful creation, partial data, save errors)
+- Created **AuthService** unit tests (11 tests, 100% coverage)
+  - Tests for `validateUser` method (valid/invalid credentials, bcrypt errors)
+  - Tests for `login` method (token generation)
+  - Tests for `register` method (password hashing, user creation, error propagation)
+- Created comprehensive E2E test suite (`test/auth.e2e-spec.ts`)
+  - 14 test cases covering registration, login, protected routes, and validation
+  - Tests written but require configuration fixes for JWT/Auth
+- Updated Jest configuration with:
+  - Coverage thresholds (global: 50%, critical services: 80%)
+  - Coverage collection exclusions (DTOs, entities, modules)
+  - Multiple coverage reporters (text, html, lcov)
+  - HTML coverage report generation
+
 ### Added - Phase 1 Sprint 1 (2025-12-02)
 
 #### Environment Configuration System
