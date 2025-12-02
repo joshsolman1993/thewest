@@ -38,16 +38,14 @@ interface QuestState {
     fetchQuests: () => Promise<void>;
     acceptQuest: (questId: string) => Promise<void>;
     completeQuest: (questId: string) => Promise<void>;
-
-    // Helper to update local progress optimistically (optional, or we rely on refetch)
-    // For now, let's rely on refetch or simple local update
+    updateObjective: (questId: string, objectiveId: string, progress: number) => void;
 }
 
 const API_URL = 'http://localhost:3000';
 
 export const useQuestStore = create<QuestState>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             availableQuests: [],
             activeQuests: [],
             completedQuests: [],
@@ -130,6 +128,16 @@ export const useQuestStore = create<QuestState>()(
                 } catch (err) {
                     console.error('Failed to complete quest', err);
                 }
+            },
+
+            updateObjective: (questId, objectiveId, progress) => {
+                set((state) => ({
+                    activeQuests: state.activeQuests.map(q =>
+                        q.quest.id === questId
+                            ? { ...q, progress: { ...q.progress, [objectiveId]: progress } }
+                            : q
+                    )
+                }));
             }
         }),
         {

@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes } from 'react';
+import { type SelectHTMLAttributes } from 'react';
 import styles from './WesternSelect.module.css';
 
 interface WesternSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {

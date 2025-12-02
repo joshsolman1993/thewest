@@ -19,11 +19,10 @@ import { SlotType } from '../types/inventory';
 import type { InventoryItem } from '../types/inventory';
 
 export const CharacterPage = () => {
-    const { name, stats, updateAttribute } = useCharacterStore();
+    const { stats, updateAttribute } = useCharacterStore();
 
     const { items, equipped, equipItem, unequipItem } = useInventoryStore();
     const maxSlots = 20; // Hardcoded for now
-    const [activeId, setActiveId] = useState<string | null>(null);
     const [activeItem, setActiveItem] = useState<InventoryItem | null>(null);
 
     const sensors = useSensors(
@@ -37,7 +36,6 @@ export const CharacterPage = () => {
     const attributeKeys = Object.keys(stats.attributes) as Array<keyof typeof stats.attributes>;
 
     const handleDragStart = (event: DragStartEvent) => {
-        setActiveId(event.active.id as string);
         const item = items.find(i => i.id === event.active.id as string) ||
             Object.values(equipped).find(i => i?.id === event.active.id as string);
         if (item) setActiveItem(item as any);
@@ -46,7 +44,6 @@ export const CharacterPage = () => {
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
 
-        setActiveId(null);
         setActiveItem(null);
 
         if (!over) return;
@@ -57,7 +54,7 @@ export const CharacterPage = () => {
         if (!overData) return;
 
         // Find where the item currently is
-        const currentSlotEntry = Object.entries(equipment).find(([_, item]) => item?.instanceId === activeInstanceId);
+        const currentSlotEntry = Object.entries(equipped).find(([_, item]) => item?.instanceId === activeInstanceId);
         const currentSlot = currentSlotEntry ? currentSlotEntry[0] as SlotType : null;
 
         // Dropped on Equipment Slot
@@ -66,7 +63,7 @@ export const CharacterPage = () => {
 
             // Check if item belongs in this slot
             const item = items.find(i => i.instanceId === activeInstanceId) ||
-                Object.values(equipment).find(i => i?.instanceId === activeInstanceId);
+                Object.values(equipped).find(i => i?.instanceId === activeInstanceId);
 
             if (item && item.slot === targetSlot) {
                 equipItem(activeInstanceId, targetSlot);

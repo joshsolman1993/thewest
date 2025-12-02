@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import { type InputHTMLAttributes } from 'react';
 import styles from './WesternInput.module.css';
 
 interface WesternInputProps extends InputHTMLAttributes<HTMLInputElement> {

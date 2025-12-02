@@ -1,37 +1,24 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useAuthStore } from './authStore';
-
-export interface Item {
-    id: string;
-    name: string;
-    description: string;
-    type: 'weapon' | 'armor' | 'consumable' | 'material';
-    rarity: 'common' | 'uncommon' | 'rare' | 'legendary';
-    value: number;
-    stats?: {
-        damage?: number;
-        defense?: number;
-        healing?: number;
-    };
-    stackable?: boolean;
-    quantity?: number;
-}
+import type { InventoryItem, SlotType } from '../types/inventory';
 
 interface InventoryState {
-    items: Item[];
+    items: InventoryItem[];
     equipped: {
-        mainHand: Item | null;
-        offHand: Item | null;
-        head: Item | null;
-        body: Item | null;
-        legs: Item | null;
-        boots: Item | null;
+        mainHand: InventoryItem | null;
+        offHand: InventoryItem | null;
+        head: InventoryItem | null;
+        body: InventoryItem | null;
+        legs: InventoryItem | null;
+        boots: InventoryItem | null;
+        feet: InventoryItem | null;
+        accessory: InventoryItem | null;
     };
-    addItem: (item: Item) => void;
+    addItem: (item: InventoryItem) => void;
     removeItem: (itemId: string, amount?: number) => void;
-    equipItem: (item: Item, slot: keyof InventoryState['equipped']) => void;
-    unequipItem: (slot: keyof InventoryState['equipped']) => void;
+    equipItem: (instanceId: string, slot: SlotType) => void;
+    unequipItem: (slot: SlotType) => void;
     fetchInventory: () => Promise<void>;
 }
 
@@ -39,7 +26,7 @@ const API_URL = 'http://localhost:3000';
 
 export const useInventoryStore = create<InventoryState>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             items: [],
             equipped: {
                 mainHand: null,
@@ -47,7 +34,9 @@ export const useInventoryStore = create<InventoryState>()(
                 head: null,
                 body: null,
                 legs: null,
-                boots: null
+                boots: null,
+                feet: null,
+                accessory: null,
             },
 
             fetchInventory: async () => {
@@ -61,15 +50,8 @@ export const useInventoryStore = create<InventoryState>()(
 
                     if (response.ok) {
                         const data = await response.json();
-                        // Map backend items to frontend Item interface
-                        // Note: Backend currently returns InventoryItem entity which has itemId.
-                        // We need a way to resolve itemId to full Item details (name, stats, etc.)
-                        // For now, we might need a lookup table or fetch item definitions.
-                        // Let's assume for this phase we just store what we get, 
-                        // BUT we need the item definitions.
-                        // TODO: Implement Item Registry/Database on frontend or backend.
-                        // For now, let's just log it and maybe mock the details if missing.
                         console.log('Fetched inventory:', data);
+                        // TODO: Map backend data to InventoryItem format
                     }
                 } catch (err) {
                     console.error('Failed to fetch inventory', err);
@@ -83,12 +65,12 @@ export const useInventoryStore = create<InventoryState>()(
                         return {
                             items: state.items.map(i =>
                                 i.id === newItem.id
-                                    ? { ...i, quantity: (i.quantity || 1) + (newItem.quantity || 1) }
+                                    ? { ...i, quantity: i.quantity + newItem.quantity }
                                     : i
                             )
                         };
                     }
-                    return { items: [...state.items, { ...newItem, quantity: newItem.quantity || 1 }] };
+                    return { items: [...state.items, newItem] };
                 });
 
                 // Sync with backend
@@ -102,7 +84,9 @@ export const useInventoryStore = create<InventoryState>()(
                         },
                         body: JSON.stringify({
                             itemId: newItem.id,
-                            quantity: newItem.quantity || 1
+                            itemName: newItem.name,
+                            itemType: newItem.type,
+                            quantity: newItem.quantity
                         })
                     });
                 }
@@ -128,21 +112,23 @@ export const useInventoryStore = create<InventoryState>()(
                         items: state.items.filter(i => i.id !== itemId)
                     };
                 });
-                // TODO: Sync remove with backend
             },
 
-            equipItem: (item, slot) => {
-                set((state) => ({
-                    equipped: { ...state.equipped, [slot]: item }
-                }));
-                // TODO: Sync equip with backend
+            equipItem: (instanceId, slot) => {
+                set((state) => {
+                    const item = state.items.find(i => i.instanceId === instanceId);
+                    if (!item) return state;
+
+                    return {
+                        equipped: { ...state.equipped, [slot]: item }
+                    };
+                });
             },
 
             unequipItem: (slot) => {
                 set((state) => ({
                     equipped: { ...state.equipped, [slot]: null }
                 }));
-                // TODO: Sync unequip with backend
             }
         }),
         {

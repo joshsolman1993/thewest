@@ -129,7 +129,6 @@ const CowboyModel = ({ characterClass }: { characterClass?: string | null }) => 
 
 export const Character3DViewer: React.FC<Character3DViewerProps> = ({
     characterClass = null,
-    avatar = '🤠'
 }) => {
     return (
         <div className={styles.container}>

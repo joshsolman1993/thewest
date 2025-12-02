@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import { type InputHTMLAttributes } from 'react';
 import styles from './WesternCheckbox.module.css';
 
 interface WesternCheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {

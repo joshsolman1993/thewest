@@ -23,7 +23,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     isDefending: false,
 
     startDuel: (enemy: Enemy) => {
-        const playerStats = useCharacterStore.getState().character?.attributes;
+        const playerStats = useCharacterStore.getState().stats?.attributes;
         // Simple max health calc: 50 + 10 * Endurance
         const maxHealth = playerStats ? 50 + (playerStats.endurance * 10) : 100;
 
@@ -53,9 +53,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         const { enemy, addLog } = get();
         if (!enemy) return;
 
-        const player = useCharacterStore.getState().character;
-        const equipment = useInventoryStore.getState().equipment;
-        const weapon = equipment[SlotType.MainHand];
+        const player = useCharacterStore.getState().stats;
+        const equipped = useInventoryStore.getState().equipped;
+        const weapon = equipped[SlotType.MainHand];
 
         // Calculate Player Damage
         const damage = calculateDamage(
@@ -120,7 +120,7 @@ const executeEnemyTurn = () => {
             weaponDamage: 0 // Assume base stats include "weapon" for simplicity or add to enemy type
         },
         {
-            endurance: useCharacterStore.getState().character?.attributes.endurance || 1,
+            endurance: useCharacterStore.getState().stats?.attributes.endurance || 1,
             isDefending: isDefending
         }
     );
