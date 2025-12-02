@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 1 Sprint 4-5 (2025-12-02)
+
+#### Inventory Security Audit & Improvements
+- **BREAKING**: Updated InventoryItem entity schema with new fields
+  - Added `itemName` (string) - Display name for items
+  - Added `itemType` (string) - Item category (weapon, armor, consumable, material, quest, misc)
+  - Added `user` relation - Direct user ownership
+  - Added `createdAt` (timestamp) - Item creation date
+  - Added `lastModified` (timestamp) - Last modification date
+  - Renamed `isEquipped` to `equipped` for consistency
+  - Made `character` relation optional (nullable)
+- **BREAKING**: API changes - now uses DTOs instead of raw parameters
+- **BREAKING**: Inventory operations now use userId instead of characterId
+- Created AddItemDto with comprehensive validation:
+  - itemId pattern validation (alphanumeric with dashes/underscores)
+  - itemType enum validation
+  - Quantity limits (1-9999)
+- Created UpdateItemDto for item modifications
+- Completely refactored InventoryService with security focus:
+  - Pessimistic locking for race condition prevention
+  - Transactional operations (all inventory changes are atomic)
+  - User validation (verify user exists before operations)
+  - Quantity limit enforcement
+  - Comprehensive error handling
+  - Audit logging for all inventory changes
+- Updated InventoryController with RESTful API:
+  - GET /inventory - Get user inventory
+  - GET /inventory/:itemId - Get specific item
+  - POST /inventory/add - Add item (requires AddItemDto)
+  - DELETE /inventory/:itemId - Remove item
+  - PATCH /inventory/:itemId - Update item
+  - PATCH /inventory/:itemId/equip - Toggle equipped status
+- Added `findOneById` method to UsersService
+- Updated QuestService to use new inventory API
+- Generated and executed migration: `UpdateInventoryItemSchema1764657297443`
+- Created 15 comprehensive unit tests for InventoryService
+
 ### Added - Phase 1 Sprint 3 (2025-12-02)
 
 #### PostgreSQL Migration & TypeORM Setup
