@@ -1,0 +1,85 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.label {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    min-width: 60px;
+}
+
+.barContainer {
+    position: relative;
+    flex: 1;
+    height: 24px;
+}
+
+.barBackground {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--color-leather);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-inset);
+}
+
+.barFill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hp .barFill {
+    background: linear-gradient(90deg,
+            #DC143C 0%,
+            #FF6347 50%,
+            #DC143C 100%);
+}
+
+.energy .barFill {
+    background: linear-gradient(90deg,
+            #FFD700 0%,
+            #FFA500 50%,
+            #FFD700 100%);
+}
+
+.xp .barFill {
+    background: linear-gradient(90deg,
+            #4169E1 0%,
+            #1E90FF 50%,
+            #4169E1 100%);
+}
+
+.glassHighlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+.value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+}

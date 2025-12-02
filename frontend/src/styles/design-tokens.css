@@ -1,0 +1,181 @@
+/* Western Design System Tokens */
+
+:root {
+  /* Primary - Leather & Wood */
+  --color-leather-darkest: #1A0F0A;
+  --color-leather-dark: #3E2816;
+  --color-leather: #6B4423;
+  --color-leather-light: #A0745C;
+  --color-wood: #4A3828;
+  
+  /* Secondary - Parchment & Dust */
+  --color-parchment-dark: #DCC9A8;
+  --color-parchment: #F4E8D8;
+  --color-parchment-light: #FFF9ED;
+  --color-dust: #C9B88D;
+  
+  /* Accent - Gold & Metal */
+  --color-gold: #D4AF37;
+  --color-gold-bright: #FFD700;
+  --color-brass: #B87333;
+  --color-silver: #C0C0C0;
+  
+  /* Status Colors */
+  --color-blood: #8B0000;
+  --color-health: #DC143C;
+  --color-energy: #FFD700;
+  --color-xp: #4169E1;
+  
+  /* UI States */
+  --color-success: #228B22;
+  --color-warning: #FF8C00;
+  --color-error: #B22222;
+  --color-info: #4682B4;
+  
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+  --gradient-leather: linear-gradient(180deg, #6B4423 0%, #3E2816 100%);
+  --gradient-parchment: linear-gradient(135deg, #FFF9ED 0%, #F4E8D8 50%, #DCC9A8 100%);
+  
+  /* Typography */
+  --font-display: 'Rye', cursive;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Merriweather', serif;
+  --font-ui: 'Lato', sans-serif;
+  
+  /* Spacing Scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+  
+  /* Shadow System */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.5);
+  --shadow-xl: 0 12px 24px rgba(0,0,0,0.6);
+  --shadow-inset: inset 0 2px 4px rgba(0,0,0,0.3);
+  
+  /* Border Radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* Global Resets & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-parchment);
+  color: var(--color-leather-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-leather-darkest);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem;
+  font-family: var(--font-display);
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+button {
+  font-family: var(--font-ui);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Utility Classes */
+.western-panel {
+  background: var(--gradient-parchment);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.western-panel::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: var(--color-leather);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+}
+
+.western-border {
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-md);
+}
+
+.metal-texture {
+  background: linear-gradient(
+    135deg,
+    #8B7355 0%,
+    #A0826D 25%,
+    #8B7355 50%,
+    #6B5D4F 75%,
+    #8B7355 100%
+  );
+  position: relative;
+}
+
+.metal-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.1) 2px,
+    rgba(0,0,0,0.1) 4px
+  );
+  pointer-events: none;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-parchment-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-leather);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-leather-dark);
+}

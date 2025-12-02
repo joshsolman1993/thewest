@@ -1,0 +1,78 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.label {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-leather-dark);
+}
+
+.required {
+    color: var(--color-error);
+    margin-left: var(--space-1);
+}
+
+.selectWrapper {
+    position: relative;
+}
+
+.select {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    padding-right: var(--space-8);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-leather-darkest);
+    background: var(--color-parchment-light);
+    border: 2px solid var(--color-leather);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-inset);
+    cursor: pointer;
+    appearance: none;
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--color-dust);
+}
+
+.select.error {
+    border-color: var(--color-error);
+}
+
+.arrow {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gold);
+    pointer-events: none;
+    font-size: 0.75rem;
+}
+
+.errorText {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.errorText::before {
+    content: '⚠';
+}

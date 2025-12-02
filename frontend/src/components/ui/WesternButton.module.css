@@ -1,0 +1,98 @@
+.button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-gold);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.button:hover::before {
+    opacity: 0.1;
+}
+
+.rivet {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, var(--color-brass) 0%, var(--color-leather-dark) 70%);
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.rivet:first-of-type {
+    top: 6px;
+    left: 6px;
+}
+
+.rivet:nth-of-type(2) {
+    bottom: 6px;
+    right: 6px;
+}
+
+.icon {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    position: relative;
+    z-index: 1;
+}
+
+/* Variants */
+.primary {
+    background: var(--gradient-gold);
+    color: var(--color-leather-darkest);
+}
+
+.secondary {
+    background: var(--gradient-leather);
+    color: var(--color-parchment);
+}
+
+.danger {
+    background: linear-gradient(135deg, #DC143C, #8B0000);
+    color: white;
+}
+
+/* Sizes */
+.sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: 0.875rem;
+}
+
+.md {
+    padding: var(--space-3) var(--space-5);
+    font-size: 1rem;
+}
+
+.lg {
+    padding: var(--space-4) var(--space-6);
+    font-size: 1.125rem;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

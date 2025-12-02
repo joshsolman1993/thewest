@@ -1,0 +1,142 @@
+.container {
+    position: fixed;
+    top: var(--space-6);
+    right: var(--space-4);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: 400px;
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--gradient-parchment);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    border: 2px solid;
+    pointer-events: all;
+    cursor: pointer;
+    min-width: 300px;
+    position: relative;
+}
+
+.toast::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: var(--color-leather-dark);
+    border-radius: var(--radius-lg);
+    z-index: -1;
+}
+
+.icon {
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.message {
+    flex: 1;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.closeButton {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: none;
+    flex-shrink: 0;
+}
+
+.closeButton:hover {
+    background: rgba(0, 0, 0, 0.4);
+    transform: rotate(90deg);
+}
+
+/* Toast Types */
+.success {
+    border-color: var(--color-success);
+}
+
+.success .icon {
+    background: var(--color-success);
+    color: white;
+}
+
+.success .message {
+    color: var(--color-success);
+}
+
+.error {
+    border-color: var(--color-error);
+}
+
+.error .icon {
+    background: var(--color-error);
+    color: white;
+}
+
+.error .message {
+    color: var(--color-error);
+}
+
+.warning {
+    border-color: var(--color-warning);
+}
+
+.warning .icon {
+    background: var(--color-warning);
+    color: white;
+}
+
+.warning .message {
+    color: var(--color-warning);
+}
+
+.info {
+    border-color: var(--color-info);
+}
+
+.info .icon {
+    background: var(--color-info);
+    color: white;
+}
+
+.info .message {
+    color: var(--color-info);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .container {
+        left: var(--space-4);
+        right: var(--space-4);
+        max-width: none;
+    }
+
+    .toast {
+        min-width: auto;
+    }
+}
