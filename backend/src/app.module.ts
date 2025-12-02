@@ -34,19 +34,16 @@ import { validationSchema } from './config/validation.schema';
         const dbConfig = configService.get('database');
 
         return {
-          type: dbConfig.type,
-          ...(dbConfig.type === 'sqlite'
-            ? { database: dbConfig.database }
-            : {
-              host: dbConfig.host,
-              port: dbConfig.port,
-              username: dbConfig.username,
-              password: dbConfig.password,
-              database: dbConfig.database,
-            }
-          ),
+          type: 'postgres',
+          host: dbConfig.host,
+          port: dbConfig.port,
+          username: dbConfig.username,
+          password: dbConfig.password,
+          database: dbConfig.database,
           entities: [User, Character, InventoryItem, Quest, UserQuest],
-          synchronize: dbConfig.synchronize, // Auto-sync in dev, false in production
+          synchronize: false, // DISABLED - use migrations instead
+          migrationsRun: true, // Auto-run pending migrations on startup
+          logging: configService.get('app.nodeEnv') === 'development' ? ['query', 'error'] : ['error'],
         };
       },
     }),
